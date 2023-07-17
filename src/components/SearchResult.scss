@@ -1,0 +1,18 @@
+.search-result-wrapper {
+  background-color: #fff;
+  min-height: 300px;
+
+  padding: 1rem;
+  border-radius: 1rem;
+
+  legend {
+    position: relative;
+    display: block;
+
+    top: 25px;
+
+    color: #969696;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
