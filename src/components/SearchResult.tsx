@@ -4,17 +4,13 @@ import SearchResultItem from "./SearchResultItem";
 import { useSickStateContext } from "contexts/Sick";
 
 function SearchResults() {
-  const { data, loading, error, isStale } = useSickStateContext();
+  const { data, loading, error } = useSickStateContext();
 
   if (error) {
     return 1;
   }
 
   if (loading) {
-    return 1;
-  }
-
-  if (isStale) {
     return 1;
   }
 
