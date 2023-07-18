@@ -1,4 +1,5 @@
 import { FNVHash } from "utils/FNVHash";
+import { isStaled } from "utils/cacheTime";
 
 import type { QueryResponse } from "types/query";
 
@@ -31,10 +32,14 @@ class QueryCache {
     return this.queries.get(hashKey);
   };
 
-  hasQuery = (queryKey: string[]): boolean => {
-    console.log(this.queries);
+  hasValidQuery = (queryKey: string[]): boolean => {
     const hashKey = this.hashQueryKey(queryKey);
-    return this.queries.has(hashKey);
+    const data = this.queries.get(hashKey);
+    if (data) {
+      return !isStaled(data.staleTime);
+    }
+
+    return false;
   };
 }
 

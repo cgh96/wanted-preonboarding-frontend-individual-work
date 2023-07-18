@@ -1,3 +1,5 @@
+import { getStaleTime } from "utils/cacheTime";
+
 import { useContext, createContext, useState } from "react";
 
 import QueryCache from "./QueryCache";
@@ -12,7 +14,7 @@ const SickStateContext = createContext<QueryResponse<any>>({
   data: null,
   error: null,
   loading: false,
-  isStale: false,
+  staleTime: new Date(),
 });
 const SickDispatchContext = createContext<
   (({ queryFn, staleTime }: UseQueryParams<string>) => Promise<void>) | null
@@ -28,7 +30,7 @@ function SickProvider({ children }: SickProviderProps) {
     data: null,
     loading: false,
     error: false,
-    isStale: false,
+    staleTime: new Date(),
   });
 
   const useQuery = async ({
@@ -36,11 +38,13 @@ function SickProvider({ children }: SickProviderProps) {
     queryFn,
     staleTime,
   }: UseQueryParams<string>): Promise<void> => {
-    if (queryCache.hasQuery(queryKey)) {
+    if (queryCache.hasValidQuery(queryKey)) {
       const queryData = queryCache.getQuery(queryKey);
       queryData && setData(queryData);
       return;
     }
+
+    const STALE_TIME = staleTime ?? 1000 * 60;
 
     try {
       setData((prev) => ({
@@ -48,14 +52,13 @@ function SickProvider({ children }: SickProviderProps) {
         data: null,
         error: null,
         loading: true,
-        isStale: false,
       }));
 
       const result = await queryFn(...queryKey);
       queryCache.addQuery(queryKey, {
         data: result,
         loading: false,
-        isStale: false,
+        staleTime: getStaleTime(STALE_TIME),
         error: null,
       });
 
@@ -63,6 +66,7 @@ function SickProvider({ children }: SickProviderProps) {
         ...prev,
         data: result,
         loading: false,
+        staleTime: getStaleTime(STALE_TIME),
         error: null,
       }));
     } catch (e) {
@@ -71,6 +75,7 @@ function SickProvider({ children }: SickProviderProps) {
         data: null,
         loading: false,
         error: e,
+        staleTime: new Date(),
       }));
     }
   };
