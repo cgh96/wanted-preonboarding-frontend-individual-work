@@ -1,10 +1,10 @@
 import "./SearchResult.scss";
 
 import SearchResultItem from "./SearchResultItem";
-import { useQueryStateContext } from "contexts/Query";
+import { useSickStateContext } from "contexts/Sick";
 
 function SearchResults() {
-  const { data, loading, error, isStale } = useQueryStateContext();
+  const { data, loading, error, isStale } = useSickStateContext();
 
   if (error) {
     return 1;

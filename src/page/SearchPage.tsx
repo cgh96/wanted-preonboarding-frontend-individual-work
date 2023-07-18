@@ -1,9 +1,13 @@
 import SearchForm from "components/SearchForm";
 
+import SickProvider from "contexts/Sick";
+
 function SearchPage() {
   return (
     <main>
-      <SearchForm />
+      <SickProvider>
+        <SearchForm />
+      </SickProvider>
     </main>
   );
 }
