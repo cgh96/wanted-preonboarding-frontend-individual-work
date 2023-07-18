@@ -5,7 +5,8 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { getSicks } from "axiosInstance/getSicks";
 import { useQueryDispatchContext } from "contexts/Query";
-import { useState, useEffect } from "react";
+import { useDebounce } from "hooks/useDebounce";
+import { useState } from "react";
 
 interface SearchInputProps {
   onFocusInput: () => void;
@@ -26,16 +27,19 @@ function SearchInput({
 
   const dispatchQuery = useQueryDispatchContext();
 
-  useEffect(() => {
-    console.log(searchKeyword);
-    if (dispatchQuery && inputFocus) {
-      dispatchQuery({
-        queryKey: [searchKeyword],
-        queryFn: async (keyword: string) => await getSicks(keyword),
-        staleTime: 1000 * 5 * 60,
-      });
-    }
-  }, [inputFocus, searchKeyword]);
+  useDebounce(
+    [inputFocus, searchKeyword],
+    () => {
+      if (dispatchQuery && inputFocus) {
+        dispatchQuery({
+          queryKey: [searchKeyword],
+          queryFn: async (keyword: string) => await getSicks(keyword),
+          staleTime: 1000 * 5 * 60,
+        });
+      }
+    },
+    750,
+  );
 
   const isVisiblePlaceholder = searchKeyword.length ? "input-focus" : "";
   const fieldsetBorderColor =
