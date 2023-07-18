@@ -4,16 +4,12 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import QueryProvider from "contexts/Query";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <QueryProvider>
-      <App />
-    </QueryProvider>
+    <App />
   </React.StrictMode>,
 );
 

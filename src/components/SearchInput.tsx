@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { getSicks } from "axiosInstance/getSicks";
-import { useQueryDispatchContext } from "contexts/Query";
+import { useSickDispatchContext } from "contexts/Sick";
 import { useDebounce } from "hooks/useDebounce";
 import { useState } from "react";
 
@@ -25,7 +25,7 @@ function SearchInput({
     setSearchKeyword(e.target.value);
   };
 
-  const dispatchQuery = useQueryDispatchContext();
+  const dispatchQuery = useSickDispatchContext();
 
   useDebounce(
     [inputFocus, searchKeyword],
@@ -38,7 +38,7 @@ function SearchInput({
         });
       }
     },
-    750,
+    300,
   );
 
   const isVisiblePlaceholder = searchKeyword.length ? "input-focus" : "";
