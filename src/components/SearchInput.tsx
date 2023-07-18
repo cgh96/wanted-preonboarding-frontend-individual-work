@@ -3,23 +3,39 @@ import "./SearchInput.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-import { useState } from "react";
+import { getSicks } from "axiosInstance/getSicks";
+import { useQueryDispatchContext } from "contexts/Query";
+import { useState, useEffect } from "react";
 
-function SearchInput() {
+interface SearchInputProps {
+  onFocusInput: () => void;
+  onBlurInput: () => void;
+  inputFocus: boolean;
+}
+
+function SearchInput({
+  onFocusInput,
+  onBlurInput,
+  inputFocus,
+}: SearchInputProps) {
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [inputFocus, setInputFocus] = useState(false);
 
   const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value);
   };
 
-  const onFocusInput = () => {
-    setInputFocus(true);
-  };
+  const dispatchQuery = useQueryDispatchContext();
 
-  const onBlurInput = () => {
-    setInputFocus(false);
-  };
+  useEffect(() => {
+    console.log(searchKeyword);
+    if (dispatchQuery && inputFocus) {
+      dispatchQuery({
+        queryKey: [searchKeyword],
+        queryFn: async (keyword: string) => await getSicks(keyword),
+        staleTime: 1000 * 5 * 60,
+      });
+    }
+  }, [inputFocus, searchKeyword]);
 
   const isVisiblePlaceholder = searchKeyword.length ? "input-focus" : "";
   const fieldsetBorderColor =
