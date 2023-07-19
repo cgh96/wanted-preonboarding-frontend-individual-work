@@ -307,7 +307,8 @@ const handleSelectIdx = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
 <br>
 
-- input창에 어떤 값이 입력되어 있고, selectIdx가 -1이 아닐 때만 API호출
+- input창에 어떤 값이 입력되어 있고, selectIdx가 -1일 때만 API호출
+- input창의 value가 변하면 selectIdx는 -1로 초기화
 
 ```
  useDebounce(
