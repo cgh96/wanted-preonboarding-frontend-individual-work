@@ -2,7 +2,7 @@
 
 ### [한국임상정보](https://clinicaltrialskorea.com/)의 검색 영역 클론하기<br>
 
-<img src="https://github.com/Gridge-Test/bob-13/assets/68717963/ea644383-923f-40e1-af21-daaaafcb33aa" width="100%" style="position: relative; left: 50%; transform: translateX(-50%); max-width: 580px"/>
+<img src="https://github.com/Gridge-Test/bob-13/assets/68717963/ea644383-923f-40e1-af21-daaaafcb33aa" width="100%" style="position: relative; left: 50%; transform: translateX(-50%); max-width: 500px;"/>
 <br><br>
 
 ## API Repository
@@ -34,8 +34,8 @@ https://github.com/walking-sunset/assignment-api
 
 ![api캐싱](https://github.com/gyuhoBest/wanted-preonboarding-frontend-11th-4weeks/assets/68717963/1d7efea4-8faf-4987-b3a1-d1eb83a74614)
 
-queryKey를 기반으로 API response를 구분하고 캐싱할 수 있도록 했습니다.
-캐싱된 queryKey를 기반으로 api를 요청할 경우, api 함수 호출 X<br>
+queryKey를 기반으로 API response를 구분하고 캐싱할 수 있도록 했습니다.<b>
+캐싱된 queryKey와 동일한 queryKey로 api를 요청할 경우, api 함수가 호출되지 않습니다.<br>
 api 호출 여부는 console창에 `calling api`출력으로 구분합니다.
 
 다음과 같이 설계했습니다.
