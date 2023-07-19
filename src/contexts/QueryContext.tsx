@@ -37,7 +37,7 @@ function QueryProvider({ children }: QueryProviderProps) {
     queryKey,
     queryFn,
     staleTime,
-  }: UseQueryParams<string>): Promise<void> => {
+  }: UseQueryParams<any>): Promise<void> => {
     if (queryCache.hasValidQuery(queryKey)) {
       const queryData = queryCache.getQuery(queryKey);
       queryData && setData(queryData);
