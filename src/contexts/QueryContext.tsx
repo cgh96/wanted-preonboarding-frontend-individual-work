@@ -2,7 +2,6 @@ import { getStaleTime } from "utils/cacheTime";
 
 import { useContext, createContext, useState } from "react";
 import { useCache } from "./QueryCacheContext";
-// import QueryCache from "./QueryCache";
 
 import type { QueryResponse, UseQueryParams } from "types/query";
 
@@ -27,7 +26,7 @@ function QueryProvider({ children }: QueryProviderProps) {
   const [data, setData] = useState<QueryResponse<any>>({
     data: null,
     loading: false,
-    error: false,
+    error: null,
     staleTime: new Date(),
   });
 
@@ -70,11 +69,13 @@ function QueryProvider({ children }: QueryProviderProps) {
         error: null,
       }));
     } catch (e) {
+      const error = e as Error;
+
       setData((prev) => ({
         ...prev,
         data: null,
         loading: false,
-        error: e,
+        error: error.message,
         staleTime: new Date(),
       }));
     }

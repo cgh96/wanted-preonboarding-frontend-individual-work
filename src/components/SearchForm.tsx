@@ -2,10 +2,16 @@ import "./SearchForm.scss";
 
 import SearchInput from "./SearchInput";
 import SearchResults from "./SearchResult";
+import Error from "./common/Error";
+
+import { useQueryStateContext } from "contexts/QueryContext";
 
 import { useState } from "react";
 
 function SearchForm() {
+  const { error } = useQueryStateContext();
+  console.log(error);
+
   const [inputFocus, setInputFocus] = useState(false);
 
   const onFocusInput = () => {
@@ -19,6 +25,10 @@ function SearchForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
+
+  if (error) {
+    return <Error errorMessage={JSON.stringify(error)} />;
+  }
 
   return (
     <form className="search-form" onSubmit={handleSubmit}>
