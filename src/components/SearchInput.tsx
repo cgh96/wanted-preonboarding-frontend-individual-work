@@ -6,31 +6,37 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { getSicks } from "axiosInstance/getSicks";
 import { useQueryDispatchContext } from "contexts/QueryContext";
 import { useDebounce } from "hooks/useDebounce";
-import { useState } from "react";
 
 interface SearchInputProps {
   onFocusInput: () => void;
   onBlurInput: () => void;
+  onChangeSearchKeyword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSelectIdx: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  selectIdx: number;
+  searchKeyword: string;
   inputFocus: boolean;
 }
 
 function SearchInput({
   onFocusInput,
   onBlurInput,
+  onChangeSearchKeyword,
+  handleSelectIdx,
+  selectIdx,
+  searchKeyword,
   inputFocus,
 }: SearchInputProps) {
-  const [searchKeyword, setSearchKeyword] = useState("");
-
-  const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
-  };
-
   const sickDispatch = useQueryDispatchContext();
 
   useDebounce(
     [inputFocus, searchKeyword],
     () => {
-      if (sickDispatch && inputFocus) {
+      if (
+        sickDispatch &&
+        inputFocus &&
+        searchKeyword.length &&
+        selectIdx === -1
+      ) {
         sickDispatch({
           queryKey: [searchKeyword],
           queryFn: async (keyword: string) => await getSicks(keyword),
@@ -62,6 +68,7 @@ function SearchInput({
           onChange={onChangeSearchKeyword}
           onBlur={onBlurInput}
           onFocus={onFocusInput}
+          onKeyDown={handleSelectIdx}
         />
       </div>
       <button type="submit">
