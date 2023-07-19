@@ -1,24 +1,18 @@
 import "./SearchResult.scss";
 
 import SearchResultItem from "./SearchResultItem";
-import { useSickStateContext } from "contexts/Sick";
+import { useQueryStateContext } from "contexts/QueryContext";
+import Loading from "./common/Loading";
 
 function SearchResults() {
-  const { data, loading, error } = useSickStateContext();
-
-  if (error) {
-    return 1;
-  }
-
-  if (loading) {
-    return 1;
-  }
+  const { data, loading } = useQueryStateContext();
 
   return (
     <fieldset className="search-result-wrapper">
       <legend>추천 검색어</legend>
       <div style={{ height: "25px" }} aria-hidden />
-      {(!data || data?.length === 0) && "검색어 없음"}
+      {loading && <Loading />}
+      {((!loading && !data) || data?.length === 0) && "검색어 없음"}
       <ul>
         {data?.map((e: any) => (
           <li key={e.sickCd}>
