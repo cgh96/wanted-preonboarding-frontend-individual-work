@@ -1,6 +1,6 @@
 import SearchForm from "components/SearchForm";
 
-import SickProvider from "contexts/Sick";
+import SickProvider from "contexts/QueryContext";
 
 function SearchPage() {
   return (

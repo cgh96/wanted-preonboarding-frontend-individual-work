@@ -1,37 +1,37 @@
 import { getStaleTime } from "utils/cacheTime";
 
 import { useContext, createContext, useState } from "react";
-
-import QueryCache from "./QueryCache";
+import { useCache } from "./QueryCacheContext";
+// import QueryCache from "./QueryCache";
 
 import type { QueryResponse, UseQueryParams } from "types/query";
 
-interface SickProviderProps {
+interface QueryProviderProps {
   children: React.ReactNode;
 }
 
-const SickStateContext = createContext<QueryResponse<any>>({
+const QueryStateContext = createContext<QueryResponse<any>>({
   data: null,
   error: null,
   loading: false,
   staleTime: new Date(),
 });
-const SickDispatchContext = createContext<
+const QueryDispatchContext = createContext<
   (({ queryFn, staleTime }: UseQueryParams<string>) => Promise<void>) | null
 >(null);
 
-export const useSickDispatchContext = () => useContext(SickDispatchContext);
-export const useSickStateContext = () => useContext(SickStateContext);
+export const useQueryDispatchContext = () => useContext(QueryDispatchContext);
+export const useQueryStateContext = () => useContext(QueryStateContext);
 
-const queryCache = new QueryCache();
-
-function SickProvider({ children }: SickProviderProps) {
+function QueryProvider({ children }: QueryProviderProps) {
   const [data, setData] = useState<QueryResponse<any>>({
     data: null,
     loading: false,
     error: false,
     staleTime: new Date(),
   });
+
+  const queryCache = useCache();
 
   const useQuery = async ({
     queryKey,
@@ -81,12 +81,12 @@ function SickProvider({ children }: SickProviderProps) {
   };
 
   return (
-    <SickStateContext.Provider value={data}>
-      <SickDispatchContext.Provider value={useQuery}>
+    <QueryStateContext.Provider value={data}>
+      <QueryDispatchContext.Provider value={useQuery}>
         {children}
-      </SickDispatchContext.Provider>
-    </SickStateContext.Provider>
+      </QueryDispatchContext.Provider>
+    </QueryStateContext.Provider>
   );
 }
 
-export default SickProvider;
+export default QueryProvider;
