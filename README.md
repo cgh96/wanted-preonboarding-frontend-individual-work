@@ -1,4 +1,8 @@
-# 원티드 프리온보딩 인턴십 4주차 과제
+# 원티드 프리온보딩 인턴십 과제
+
+## # 기술스택
+`React, ContextAPI, SCSS`
+<br><br>
 
 ### [한국임상정보](https://clinicaltrialskorea.com/)의 검색 영역 클론하기<br>
 
@@ -9,6 +13,14 @@
 
 https://github.com/walking-sunset/assignment-api
 
+<br><br>
+
+## Getting Started
+1. 위 `API REPOSITORY` 클론하여 구동하기
+3. 현재 프로젝트 클론하여 구동하기.
+   - `npm install`
+   - `npm start`
+  
 <br><br>
 
 ## # 커밋 컨벤션
