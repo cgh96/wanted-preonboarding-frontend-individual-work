@@ -1,12 +1,10 @@
-# 원티드 프리온보딩 인턴십 과제
+## [한국임상정보](https://clinicaltrialskorea.com/)의 검색 영역 클론하기<br>
+
+<img src="https://github.com/Gridge-Test/bob-13/assets/68717963/ea644383-923f-40e1-af21-daaaafcb33aa" width="100%" style="position: relative; left: 50%; transform: translateX(-50%); max-width: 500px;"/>
+<br><br>
 
 ## # 기술스택
 `React, ContextAPI, SCSS`
-<br><br>
-
-### [한국임상정보](https://clinicaltrialskorea.com/)의 검색 영역 클론하기<br>
-
-<img src="https://github.com/Gridge-Test/bob-13/assets/68717963/ea644383-923f-40e1-af21-daaaafcb33aa" width="100%" style="position: relative; left: 50%; transform: translateX(-50%); max-width: 500px;"/>
 <br><br>
 
 ## API Repository
