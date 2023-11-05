@@ -4,6 +4,7 @@
 <br><br>
 
 ## # 기술스택
+
 `React, ContextAPI, SCSS`
 <br><br>
 
@@ -14,11 +15,12 @@ https://github.com/walking-sunset/assignment-api
 <br><br>
 
 ## Getting Started
+
 1. 위 `API REPOSITORY` 클론하여 구동하기
-3. 현재 프로젝트 클론하여 구동하기.
+2. 현재 프로젝트 클론하여 구동하기.
    - `npm install`
    - `npm start`
-  
+
 <br><br>
 
 ## # 커밋 컨벤션
@@ -80,6 +82,10 @@ class QueryCache {
     // 2-2. 만료 예정 시간(staleTime)이 현재 시간 보다 앞에 있다. => 만료된 값
   };
 }
+
+const SingletoneQueryCache = Object.freeze(new QueryCache());
+
+export default SingletoneQueryCache;
 ```
 
 <br>
@@ -90,9 +96,9 @@ queryCache Context를 만들어서 Root Node에 제공했습니다.
 
 ```
 import { useContext, createContext } from "react";
-import QueryCache from "./QueryCache";
+import SingletoneQueryCache, { type QueryCache } from "./QueryCache";
 
-const CacheContext = createContext<QueryCache>(new QueryCache());
+const CacheContext = createContext<Readonly<QueryCache>>(SingletoneQueryCache);
 export const useCache = () => useContext(CacheContext);
 
 interface CacheProviderProps {
@@ -100,15 +106,14 @@ interface CacheProviderProps {
 }
 
 function CacheProvider({ children }: CacheProviderProps) {
-  const queryCache = new QueryCache();
-
   return (
-    <CacheContext.Provider value={queryCache}>{children}</CacheContext.Provider>
+    <CacheContext.Provider value={SingletoneQueryCache}>
+      {children}
+    </CacheContext.Provider>
   );
 }
 
 export default CacheProvider;
-
 ```
 
 <br>

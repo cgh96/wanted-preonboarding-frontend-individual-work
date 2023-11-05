@@ -1,7 +1,7 @@
 import { useContext, createContext } from "react";
-import QueryCache from "./QueryCache";
+import SingletoneQueryCache, { type QueryCache } from "./QueryCache";
 
-const CacheContext = createContext<QueryCache>(new QueryCache());
+const CacheContext = createContext<Readonly<QueryCache>>(SingletoneQueryCache);
 export const useCache = () => useContext(CacheContext);
 
 interface CacheProviderProps {
@@ -9,10 +9,10 @@ interface CacheProviderProps {
 }
 
 function CacheProvider({ children }: CacheProviderProps) {
-  const queryCache = new QueryCache();
-
   return (
-    <CacheContext.Provider value={queryCache}>{children}</CacheContext.Provider>
+    <CacheContext.Provider value={SingletoneQueryCache}>
+      {children}
+    </CacheContext.Provider>
   );
 }
 

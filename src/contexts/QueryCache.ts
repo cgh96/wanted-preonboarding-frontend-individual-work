@@ -3,7 +3,7 @@ import { isStaled } from "utils/cacheTime";
 
 import type { QueryResponse } from "types/query";
 
-class QueryCache {
+export class QueryCache {
   private readonly queries = new Map<any, QueryResponse<any>>();
   private readonly hashQueryKey = (queryKey: any[]) => {
     let hash = 0;
@@ -43,4 +43,6 @@ class QueryCache {
   };
 }
 
-export default QueryCache;
+const SingletoneQueryCache = Object.freeze(new QueryCache());
+
+export default SingletoneQueryCache;
